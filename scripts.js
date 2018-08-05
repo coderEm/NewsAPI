@@ -66,7 +66,7 @@ function createImageArticle (article) {
   }
 
   if (!article.urlToImage) {
-    newsimage.style.backgroundImage = "url('backup_newsimage.jpg')" // backup for faulty images
+    newsimage.style.backgroundImage = "url('images/backup_newsimage.jpg')" // backup for faulty images
   } else {
     newsimage.style.backgroundImage = "url('" + article.urlToImage + "')"
   }
@@ -75,7 +75,7 @@ function createImageArticle (article) {
 }
 
 // Getting news
-fetch('https://newsapi.org/v2/everything?sources=hacker-news&apiKey=d5fd3705dc214827afd29a85565e7693')
+fetch('https://newsapi.org/v2/top-headlines?sources=hacker-news&apiKey=d5fd3705dc214827afd29a85565e7693')
 
 // Check for errors
   .then(HNresult => {

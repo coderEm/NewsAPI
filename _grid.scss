@@ -1,0 +1,628 @@
+/*----------------------------------------------------------------
+Flex-box grid with aligners
+Based on SahAssars flex grid http://sahassar.github.io/css-framework/
+Re-built with mediaqueries for variying screens
+Re-built with SCSS http://sass-lang.com/
+-----------------------------------------------------------------*/
+ 
+@import 'helpers';
+
+
+/* M - grid widths */
+@mixin flex-basis-margin($gridclass) {
+    flex-basis: calc(#{$gridclass} - (#{$margin-hor} * 2));
+}
+
+@mixin flex-basis-padding($gridclass) {
+    flex-basis: calc(#{$gridclass} - (#{$padding-hor} * 2));
+}
+
+@mixin flex-basis-margin-padding($gridclass) {
+    flex-basis: calc(#{$gridclass} - (#{$margin-hor} * 2) - (#{$padding-hor} * 2));
+}
+
+/* M - media queries */
+@mixin breakpoint($point) {
+    @if $point == l {
+        @media (max-width: 1440px) {
+            @content;
+        }
+    }
+    @else if $point == m {
+        @media (max-width: 1024px) {
+            @content;
+        }
+    }
+    @else if $point == s {
+        @media (max-width: 780px) {
+            @content;
+        }
+    }
+    @else if $point == xs {
+        @media (max-width: 640px) {
+            @content;
+        }
+    }
+    /*ie 10+ fixes*/
+    @else if $point == ie-fix {
+        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
+            @content;
+        }
+    }
+}
+ 
+/*----------------------------------------------------------------
+General flex styles
+-----------------------------------------------------------------*/
+
+*{ min-width: 0px; }
+
+.align,
+.flex { display: flex }
+
+.hide { display: none }
+.block,
+.show { display: block }
+.inline { display: inline }
+.inline-block { display: inline-block }
+
+.flex > * > img {
+    flex: 0 0 auto;
+}
+
+/* cross-browser fix for images without class */
+.flex > * > img:not([class]) {
+    width: 100%;
+}
+
+.flex>* {
+    min-width: 0px;
+    max-width:100%;
+    box-sizing: content-box;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    margin: 0;
+}
+
+.flex {
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+
+.no-grow { flex-grow: 0 }
+.no-shrink { flex-shrink: 0 }
+.col { flex-direction: column }
+
+
+/*----------------------------------------------------------------
+Grid aligners & spacing
+-----------------------------------------------------------------*/
+.center {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.bottom,
+.top,
+.left,
+.right,
+.space-around,
+.space-between { flex-direction: row }
+.right { justify-content: flex-end }
+.left { justify-content: flex-start }
+.top { align-items: flex-start }
+.bottom { align-items: flex-end }
+.space-around { justify-content: space-around }
+.space-between { justify-content: space-between }
+
+/*----------------------------------------------------------------
+Margin & padding
+-----------------------------------------------------------------*/
+.padding > * { padding: $padding-ver $padding-hor; }
+.margin > * { margin: $margin-ver $margin-hor; }
+.col.padding > * { padding: $padding-hor $padding-ver; }
+.col.margin > * { margin: $margin-hor $margin-ver; }
+
+/*----------------------------------------------------------------
+Basic grid - Valid if no overwrite
+-----------------------------------------------------------------*/
+.one { flex-basis: $one; }
+.two { flex-basis: $two; }
+.fifth { flex-basis: $fifth; }
+.three { flex-basis: $three; }
+.four { flex-basis: $four; }
+.five { flex-basis: $five; }
+.six { flex-basis: $six; }
+.seven { flex-basis: $seven; }
+.eight { flex-basis: $eight; }
+.nine { flex-basis: $nine; }
+.ten { flex-basis: $ten; }
+.eleven { flex-basis: $eleven; }
+.twelve { flex-basis: $twelve; }
+
+
+.margin > .one { @include flex-basis-margin($one); }
+.margin > .two { @include flex-basis-margin($two); }
+.margin > .fifth { @include flex-basis-margin($fifth); }
+.margin > .three { @include flex-basis-margin($three); }
+.margin > .four { @include flex-basis-margin($four); }
+.margin > .five { @include flex-basis-margin($five); }
+.margin > .six { @include flex-basis-margin($six); }
+.margin > .seven { @include flex-basis-margin($seven); }
+.margin > .eight { @include flex-basis-margin($eight); }
+.margin > .nine { @include flex-basis-margin($nine); }
+.margin > .ten { @include flex-basis-margin($ten); }
+.margin > .eleven { @include flex-basis-margin($eleven); }
+.margin > .twelve { @include flex-basis-margin($twelve); }
+
+.padding > .one { @include flex-basis-padding($one); }
+.padding > .two { @include flex-basis-padding($two); }
+.padding > .fifth { @include flex-basis-padding($fifth); }
+.padding > .three { @include flex-basis-padding($three); }
+.padding > .four { @include flex-basis-padding($four); }
+.padding > .five { @include flex-basis-padding($five); }
+.padding > .six { @include flex-basis-padding($six); }
+.padding > .seven { @include flex-basis-padding($seven); }
+.padding > .eight { @include flex-basis-padding($eight); }
+.padding > .nine { @include flex-basis-padding($nine); }
+.padding > .ten { @include flex-basis-padding($ten); }
+.padding > .eleven { @include flex-basis-padding($eleven); }
+.padding > .twelve { @include flex-basis-padding($twelve); }
+
+.margin.padding > .one { @include flex-basis-margin-padding($one); }
+.margin.padding > .two { @include flex-basis-margin-padding($two); }
+.margin.padding > .fifth { @include flex-basis-margin-padding($fifth); }
+.margin.padding > .three { @include flex-basis-margin-padding($three); }
+.margin.padding > .four { @include flex-basis-margin-padding($four); }
+.margin.padding > .five { @include flex-basis-margin-padding($five); }
+.margin.padding > .six { @include flex-basis-margin-padding($six); }
+.margin.padding > .seven { @include flex-basis-margin-padding($seven); }
+.margin.padding > .eight { @include flex-basis-margin-padding($eight); }
+.margin.padding > .nine { @include flex-basis-margin-padding($nine); }
+.margin.padding > .ten { @include flex-basis-margin-padding($ten); }
+.margin.padding > .eleven { @include flex-basis-margin-padding($eleven); }
+.margin.padding > .twelve { @include flex-basis-margin-padding($twelve); }
+
+/*----------------------------------------------------------------
+Large screens - below 1440px wide
+-----------------------------------------------------------------*/
+
+@include breakpoint(l) 
+{
+
+    .l-align,
+    .l-flex { display: flex }
+
+    .l-hide { display: none }
+    .l-block,
+    .l-show { display: block }
+    .l-inline { display: inline }
+    .l-inline-block { display: inline-block }
+
+    .l-flex > * {
+        max-width:100%;
+        box-sizing: content-box;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        margin: 0;
+    }
+
+    .l-flex {
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .l-no-grow { flex-grow: 0 }
+    .l-no-shrink { flex-shrink: 0 }
+    .l-col { flex-direction: column }
+
+    .l-center {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .l-bottom,
+    .l-top,
+    .l-left,
+    .l-right,
+    .l-space-around,
+    .l-space-between { flex-direction: row }
+    .l-right { justify-content: flex-end }
+    .l-left { justify-content: flex-start }
+    .l-top { align-items: flex-start }
+    .l-bottom { align-items: flex-end }
+    .l-space-around { justify-content: space-around }
+    .l-space-between { justify-content: space-between }
+
+    .l-one { flex-basis: $one }
+    .l-two { flex-basis: $two }
+    .l-fifth { flex-basis: $fifth }
+    .l-three { flex-basis: $three }
+    .l-four { flex-basis: $four }
+    .l-five { flex-basis: $five }
+    .l-six { flex-basis: $six }
+    .l-seven { flex-basis: $seven }
+    .l-eight { flex-basis: $eight }
+    .l-nine { flex-basis: $nine }
+    .l-ten { flex-basis: $ten }
+    .l-eleven { flex-basis: $eleven }
+    .l-twelve { flex-basis: $twelve }
+
+    .margin > .l-one { @include flex-basis-margin($one); }
+    .margin > .l-two { @include flex-basis-margin($two); }
+    .margin > .l-fifth { @include flex-basis-margin($fifth); }
+    .margin > .l-three { @include flex-basis-margin($three); }
+    .margin > .l-four { @include flex-basis-margin($four); }
+    .margin > .l-five { @include flex-basis-margin($five); }
+    .margin > .l-six { @include flex-basis-margin($six); }
+    .margin > .l-seven { @include flex-basis-margin($seven); }
+    .margin > .l-eight { @include flex-basis-margin($eight); }
+    .margin > .l-nine { @include flex-basis-margin($nine); }
+    .margin > .l-ten { @include flex-basis-margin($ten); }
+    .margin > .l-eleven { @include flex-basis-margin($eleven); }
+    .margin > .l-twelve { @include flex-basis-margin($twelve); }
+
+    .padding > .l-one { @include flex-basis-padding($one); }
+    .padding > .l-two { @include flex-basis-padding($two); }
+    .padding > .l-fifth { @include flex-basis-padding($fifth); }
+    .padding > .l-three { @include flex-basis-padding($three); }
+    .padding > .l-four { @include flex-basis-padding($four); }
+    .padding > .l-five { @include flex-basis-padding($five); }
+    .padding > .l-six { @include flex-basis-padding($six); }
+    .padding > .l-seven { @include flex-basis-padding($seven); }
+    .padding > .l-eight { @include flex-basis-padding($eight); }
+    .padding > .l-nine { @include flex-basis-padding($nine); }
+    .padding > .l-ten { @include flex-basis-padding($ten); }
+    .padding > .l-eleven { @include flex-basis-padding($eleven); }
+    .padding > .l-twelve { @include flex-basis-padding($twelve); }
+
+    .margin.padding > .l-one { @include flex-basis-margin-padding($one); }
+    .margin.padding > .l-two { @include flex-basis-margin-padding($two); }
+    .margin.padding > .l-fifth { @include flex-basis-margin-padding($fifth); }
+    .margin.padding > .l-three { @include flex-basis-margin-padding($three); }
+    .margin.padding > .l-four { @include flex-basis-margin-padding($four); }
+    .margin.padding > .l-five { @include flex-basis-margin-padding($five); }
+    .margin.padding > .l-six { @include flex-basis-margin-padding($six); }
+    .margin.padding > .l-seven { @include flex-basis-margin-padding($seven); }
+    .margin.padding > .l-eight { @include flex-basis-margin-padding($eight); }
+    .margin.padding > .l-nine { @include flex-basis-margin-padding($nine); }
+    .margin.padding > .l-ten { @include flex-basis-margin-padding($ten); }
+    .margin.padding > .l-eleven { @include flex-basis-margin-padding($eleven); }
+    .margin.padding > .l-twelve { @include flex-basis-margin-padding($twelve); }
+
+}
+
+/*----------------------------------------------------------------
+Medium screens - below 1024px wide
+-----------------------------------------------------------------*/
+
+@include breakpoint(m) 
+{
+    .m-align,
+    .m-flex { display: flex }
+
+    .m-hide { display: none }
+    .m-block,
+    .m-show { display: block }
+    .m-inline { display: inline }
+    .m-inline-block { display: inline-block }
+
+    .m-flex > * {
+        max-width:100%;
+        box-sizing: content-box;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        margin: 0;
+    }
+
+    .m-flex {
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .m-no-grow { flex-grow: 0 }
+    .m-no-shrink { flex-shrink: 0 }
+    .m-col { flex-direction: column }
+
+    .m-center {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .m-bottom,
+    .m-top,
+    .m-left,
+    .m-right,
+    .m-space-around,
+    .m-space-between { flex-direction: row }
+    .m-right { justify-content: flex-end }
+    .m-left { justify-content: flex-start }
+    .m-top { align-items: flex-start }
+    .m-bottom { align-items: flex-end }
+    .m-space-around { justify-content: space-around }
+    .m-space-between { justify-content: space-between }
+
+    .m-one { flex-basis: $one }
+    .m-two { flex-basis: $two }
+    .m-fifth { flex-basis: $fifth }
+    .m-three { flex-basis: $three }
+    .m-four { flex-basis: $four }
+    .m-five { flex-basis: $five }
+    .m-six { flex-basis: $six }
+    .m-seven { flex-basis: $seven }
+    .m-eight { flex-basis: $eight }
+    .m-nine { flex-basis: $nine }
+    .m-ten { flex-basis: $ten }
+    .m-eleven { flex-basis: $eleven }
+    .m-twelve { flex-basis: $twelve }
+
+    .margin > .m-one { @include flex-basis-margin($one); }
+    .margin > .m-two { @include flex-basis-margin($two); }
+    .margin > .m-fifth { @include flex-basis-margin($fifth); }
+    .margin > .m-three { @include flex-basis-margin($three); }
+    .margin > .m-four { @include flex-basis-margin($four); }
+    .margin > .m-five { @include flex-basis-margin($five); }
+    .margin > .m-six { @include flex-basis-margin($six); }
+    .margin > .m-seven { @include flex-basis-margin($seven); }
+    .margin > .m-eight { @include flex-basis-margin($eight); }
+    .margin > .m-nine { @include flex-basis-margin($nine); }
+    .margin > .m-ten { @include flex-basis-margin($ten); }
+    .margin > .m-eleven { @include flex-basis-margin($eleven); }
+    .margin > .m-twelve { @include flex-basis-margin($twelve); }
+
+    .padding > .m-one { @include flex-basis-padding($one); }
+    .padding > .m-two { @include flex-basis-padding($two); }
+    .padding > .m-fifth { @include flex-basis-padding($fifth); }
+    .padding > .m-three { @include flex-basis-padding($three); }
+    .padding > .m-four { @include flex-basis-padding($four); }
+    .padding > .m-five { @include flex-basis-padding($five); }
+    .padding > .m-six { @include flex-basis-padding($six); }
+    .padding > .m-seven { @include flex-basis-padding($seven); }
+    .padding > .m-eight { @include flex-basis-padding($eight); }
+    .padding > .m-nine { @include flex-basis-padding($nine); }
+    .padding > .m-ten { @include flex-basis-padding($ten); }
+    .padding > .m-eleven { @include flex-basis-padding($eleven); }
+    .padding > .m-twelve { @include flex-basis-padding($twelve); }
+
+    .margin.padding > .m-one { @include flex-basis-margin-padding($one); }
+    .margin.padding > .m-two { @include flex-basis-margin-padding($two); }
+    .margin.padding > .m-fifth { @include flex-basis-margin-padding($fifth); }
+    .margin.padding > .m-three { @include flex-basis-margin-padding($three); }
+    .margin.padding > .m-four { @include flex-basis-margin-padding($four); }
+    .margin.padding > .m-five { @include flex-basis-margin-padding($five); }
+    .margin.padding > .m-six { @include flex-basis-margin-padding($six); }
+    .margin.padding > .m-seven { @include flex-basis-margin-padding($seven); }
+    .margin.padding > .m-eight { @include flex-basis-margin-padding($eight); }
+    .margin.padding > .m-nine { @include flex-basis-margin-padding($nine); }
+    .margin.padding > .m-ten { @include flex-basis-margin-padding($ten); }
+    .margin.padding > .m-eleven { @include flex-basis-margin-padding($eleven); }
+    .margin.padding > .m-twelve { @include flex-basis-margin-padding($twelve); }
+}
+
+/*----------------------------------------------------------------
+Small screens - below 780px wide
+-----------------------------------------------------------------*/
+
+@include breakpoint(s) 
+{
+    .s-align,
+    .s-flex { display: flex }
+
+    .s-hide { display: none }
+    .s-block,
+    .s-show { display: block }
+    .s-inline { display: inline }
+    .s-inline-block { display: inline-block }
+
+    .s-flex > * {
+        max-width:100%;
+        box-sizing: content-box;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        margin: 0;
+    }
+
+    .s-flex {
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .s-no-grow { flex-grow: 0 }
+    .s-no-shrink { flex-shrink: 0 }
+    .s-col { flex-direction: column }
+
+    .s-center {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .s-bottom,
+    .s-top,
+    .s-left,
+    .s-right,
+    .s-space-around,
+    .s-space-between { flex-direction: row }
+    .s-right { justify-content: flex-end }
+    .s-left { justify-content: flex-start }
+    .s-top { align-items: flex-start }
+    .s-bottom { align-items: flex-end }
+    .s-space-around { justify-content: space-around }
+    .s-space-between { justify-content: space-between }
+
+    .s-one { flex-basis: $one }
+    .s-two { flex-basis: $two }
+    .s-fifth { flex-basis: $fifth }
+    .s-three { flex-basis: $three }
+    .s-four { flex-basis: $four }
+    .s-five { flex-basis: $five }
+    .s-six { flex-basis: $six }
+    .s-seven { flex-basis: $seven }
+    .s-eight { flex-basis: $eight }
+    .s-nine { flex-basis: $nine }
+    .s-ten { flex-basis: $ten }
+    .s-eleven { flex-basis: $eleven }
+    .s-twelve { flex-basis: $twelve }
+
+    .margin > .s-one { @include flex-basis-margin($one); }
+    .margin > .s-two { @include flex-basis-margin($two); }
+    .margin > .s-fifth { @include flex-basis-margin($fifth); }
+    .margin > .s-three { @include flex-basis-margin($three); }
+    .margin > .s-four { @include flex-basis-margin($four); }
+    .margin > .s-five { @include flex-basis-margin($five); }
+    .margin > .s-six { @include flex-basis-margin($six); }
+    .margin > .s-seven { @include flex-basis-margin($seven); }
+    .margin > .s-eight { @include flex-basis-margin($eight); }
+    .margin > .s-nine { @include flex-basis-margin($nine); }
+    .margin > .s-ten { @include flex-basis-margin($ten); }
+    .margin > .s-eleven { @include flex-basis-margin($eleven); }
+    .margin > .s-twelve { @include flex-basis-margin($twelve); }  
+
+    .padding > .s-one { @include flex-basis-padding($one); }
+    .padding > .s-two { @include flex-basis-padding($two); }
+    .padding > .s-fifth { @include flex-basis-padding($fifth); }
+    .padding > .s-three { @include flex-basis-padding($three); }
+    .padding > .s-four { @include flex-basis-padding($four); }
+    .padding > .s-five { @include flex-basis-padding($five); }
+    .padding > .s-six { @include flex-basis-padding($six); }
+    .padding > .s-seven { @include flex-basis-padding($seven); }
+    .padding > .s-eight { @include flex-basis-padding($eight); }
+    .padding > .s-nine { @include flex-basis-padding($nine); }
+    .padding > .s-ten { @include flex-basis-padding($ten); }
+    .padding > .s-eleven { @include flex-basis-padding($eleven); }
+    .padding > .s-twelve { @include flex-basis-padding($twelve); }
+
+    .margin.padding > .s-one { @include flex-basis-margin-padding($one); }
+    .margin.padding > .s-two { @include flex-basis-margin-padding($two); }
+    .margin.padding > .s-fifth { @include flex-basis-margin-padding($fifth); }
+    .margin.padding > .s-three { @include flex-basis-margin-padding($three); }
+    .margin.padding > .s-four { @include flex-basis-margin-padding($four); }
+    .margin.padding > .s-five { @include flex-basis-margin-padding($five); }
+    .margin.padding > .s-six { @include flex-basis-margin-padding($six); }
+    .margin.padding > .s-seven { @include flex-basis-margin-padding($seven); }
+    .margin.padding > .s-eight { @include flex-basis-margin-padding($eight); }
+    .margin.padding > .s-nine { @include flex-basis-margin-padding($nine); }
+    .margin.padding > .s-ten { @include flex-basis-margin-padding($ten); }
+    .margin.padding > .s-eleven { @include flex-basis-margin-padding($eleven); }
+    .margin.padding > .s-twelve { @include flex-basis-margin-padding($twelve); }
+}
+
+
+/*----------------------------------------------------------------
+Xtra small screens - below 640px wide
+-----------------------------------------------------------------*/
+
+@include breakpoint(xs) 
+{
+
+    .xs-align,
+    .xs-flex { display: flex }
+
+    .xs-hide { display: none }
+    .xs-block,
+    .xs-show { display: block }
+    .xs-inline { display: inline }
+    .xs-inline-block { display: inline-block }
+
+    .xs-flex > * {
+        max-width:100%;
+        box-sizing: content-box;
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        margin: 0;
+    }
+
+    .xs-flex {
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+
+    .xs-no-grow { flex-grow: 0 }
+    .xs-no-shrink { flex-shrink: 0 }
+    .xs-col { flex-direction: column }
+
+    .xs-center {
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .xs-bottom,
+    .xs-top,
+    .xs-left,
+    .xs-right,
+    .xs-space-around,
+    .xs-space-between { flex-direction: row }
+    .xs-right { justify-content: flex-end }
+    .xs-left { justify-content: flex-start }
+    .xs-top { align-items: flex-start }
+    .xs-bottom { align-items: flex-end }
+    .xs-space-around { justify-content: space-around }
+    .xs-space-between { justify-content: space-between }
+
+    .xs-one { flex-basis: $one }
+    .xs-two { flex-basis: $two }
+    .xs-fifth { flex-basis: $fifth }
+    .xs-three { flex-basis: $three }
+    .xs-four { flex-basis: $four }
+    .xs-five { flex-basis: $five }
+    .xs-six { flex-basis: $six }
+    .xs-seven { flex-basis: $seven }
+    .xs-eight { flex-basis: $eight }
+    .xs-nine { flex-basis: $nine }
+    .xs-ten { flex-basis: $ten }
+    .xs-eleven { flex-basis: $eleven }
+    .xs-twelve { flex-basis: $twelve }
+
+    .margin > .xs-one { @include flex-basis-margin($one); }
+    .margin > .xs-two { @include flex-basis-margin($two); }
+    .margin > .xs-fifth { @include flex-basis-margin($fifth); }
+    .margin > .xs-three { @include flex-basis-margin($three); }
+    .margin > .xs-four { @include flex-basis-margin($four); }
+    .margin > .xs-five { @include flex-basis-margin($five); }
+    .margin > .xs-six { @include flex-basis-margin($six); }
+    .margin > .xs-seven { @include flex-basis-margin($seven); }
+    .margin > .xs-eight { @include flex-basis-margin($eight); }
+    .margin > .xs-nine { @include flex-basis-margin($nine); }
+    .margin > .xs-ten { @include flex-basis-margin($ten); }
+    .margin > .xs-eleven { @include flex-basis-margin($eleven); }
+    .margin > .xs-twelve { @include flex-basis-margin($twelve); }
+
+    .padding > .xs-one { @include flex-basis-padding($one); }
+    .padding > .xs-two { @include flex-basis-padding($two); }
+    .padding > .xs-fifth { @include flex-basis-padding($fifth); }
+    .padding > .xs-three { @include flex-basis-padding($three); }
+    .padding > .xs-four { @include flex-basis-padding($four); }
+    .padding > .xs-five { @include flex-basis-padding($five); }
+    .padding > .xs-six { @include flex-basis-padding($six); }
+    .padding > .xs-seven { @include flex-basis-padding($seven); }
+    .padding > .xs-eight { @include flex-basis-padding($eight); }
+    .padding > .xs-nine { @include flex-basis-padding($nine); }
+    .padding > .xs-ten { @include flex-basis-padding($ten); }
+    .padding > .xs-eleven { @include flex-basis-padding($eleven); }
+    .padding > .xs-twelve { @include flex-basis-padding($twelve); }
+
+    .margin.padding > .xs-one { @include flex-basis-margin-padding($one); }
+    .margin.padding > .xs-two { @include flex-basis-margin-padding($two); }
+    .margin.padding > .xs-fifth { @include flex-basis-margin-padding($fifth); }
+    .margin.padding > .xs-three { @include flex-basis-margin-padding($three); }
+    .margin.padding > .xs-four { @include flex-basis-margin-padding($four); }
+    .margin.padding > .xs-five { @include flex-basis-margin-padding($five); }
+    .margin.padding > .xs-six { @include flex-basis-margin-padding($six); }
+    .margin.padding > .xs-seven { @include flex-basis-margin-padding($seven); }
+    .margin.padding > .xs-eight { @include flex-basis-margin-padding($eight); }
+    .margin.padding > .xs-nine { @include flex-basis-margin-padding($nine); }
+    .margin.padding > .xs-ten { @include flex-basis-margin-padding($ten); }
+    .margin.padding > .xs-eleven { @include flex-basis-margin-padding($eleven); }
+    .margin.padding > .xs-twelve { @include flex-basis-margin-padding($twelve); }
+}
+

@@ -174,7 +174,8 @@ CONTENTS
         background-position: -15px center; 
         filter: blur(12px) grayscale(100%) brightness(90%);
         transition: 0.2s ease 0s;
-    }
+        transition: filter 0.3s;
+      }
 
     .newsitemtext {
         position: relative;
@@ -188,6 +189,7 @@ CONTENTS
         text-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
         font-size: 1.15rem;
         line-height: 1.2;
+        transition:background 0.2s ease 0s; 
 
         @include breakpoint(s) {
             padding: 1.5rem;
@@ -273,17 +275,18 @@ CONTENTS
             text-shadow: none; 
             transition: background 0.2s ease 0s;  
 
-            p {
+            /*p {
                 opacity: 1; 
                 transition: opacity 0.2s ease 0s;  
-            }
+            }*/
         }
 
-        .newsimage {
+ 
+        .newsimage { 
             background-position:  0px center;  
-            filter: blur(6px) grayscale(100%) brightness(80%);
             transition: 0.2s ease 0s;  
-
+            filter: blur(6px) grayscale(100%) brightness(80%);
+            transition: filter 0.3s;
         }
 
         time:after { 

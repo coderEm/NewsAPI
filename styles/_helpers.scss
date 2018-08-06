@@ -1,21 +1,19 @@
 /*----------------------------------------------------------------
-VARIABLES & MIXINS
+VARIABLES 
 -----------------------------------------------------------------*/
 
 /* Margins & paddings */
-$margin-ver: 5px; 
-$margin-hor: 5px;
+$margin-ver: 6px; 
+$margin-hor: 6px;
 $padding-ver: 30px;
 $padding-hor: 30px;
- 
+
 /* Colors */
 $hacker_orange: #FF6600; 
-$light_grey: #e4e4e4; 
-$dark_blue: #323741; 
-$aqua: #06858C; 
+$black: #202020; 
+$white: #FFF; 
 
-
-/* Column widths */
+/* Grid column widths */
 $one: 8.333333333%; 
 $two: 16.666666667%; 
 $fifth: 20%; 
@@ -29,3 +27,45 @@ $nine: 75%;
 $ten: 83.333333333%; 
 $eleven: 91.666666667%; 
 $twelve: 100%;  
+
+
+/*----------------------------------------------------------------
+MIXINS 
+-----------------------------------------------------------------*/
+
+/* Grid widths */
+@mixin flex-basis-margin($gridclass) {
+    flex-basis: calc(#{$gridclass} - (#{$margin-hor} * 2));
+}
+
+@mixin flex-basis-padding($gridclass) {
+    flex-basis: calc(#{$gridclass} - (#{$padding-hor} * 2));
+}
+
+@mixin flex-basis-margin-padding($gridclass) {
+    flex-basis: calc(#{$gridclass} - (#{$margin-hor} * 2) - (#{$padding-hor} * 2));
+}
+
+/* Media queries */
+@mixin breakpoint($point) {
+    @if $point == l {
+        @media (max-width: 1440px) {
+            @content;
+        }
+    }
+    @else if $point == m {
+        @media (max-width: 1024px) {
+            @content;
+        }
+    }
+    @else if $point == s {
+        @media (max-width: 780px) {
+            @content;
+        }
+    }
+    @else if $point == xs {
+        @media (max-width: 640px) {
+            @content;
+        }
+    }
+}

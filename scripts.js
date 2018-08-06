@@ -1,136 +1,127 @@
 // Initial vars & functions
 const neededImageArticles = 4
-const newscontainer = document.getElementById('newscontainer')
-const mainnews = document.getElementById('main-news')
-const verticalnews = document.getElementById('vertical-news')
-const othernews = document.getElementById('other-news')
+const newscontainer = document.querySelector('.newscontainer')
+const mainnews = document.querySelector('.main-news')
+const verticalnews = document.querySelector('.vertical-news')
+const othernews = document.querySelector('.other-news > div')
 
-// Creating HTML element
+// Making HTML element
 function createElement (type, attributes) {
-  const element = document.createElement(type)
-  for (var attribute in attributes) {
-    element.setAttribute(attribute, attributes[attribute])
-  }
-  return element
+    const element = document.createElement(type)
+    for (var attribute in attributes) {
+        element.setAttribute(attribute, attributes[attribute])
+    }
+    return element
 }
 
-// Creating article HTML structure
+// Setting basic article structure
 function createArticle (article) {
-  const title = createElement('h3')
-  title.append(article.title)
+    const title = createElement('h3')
+    title.append(article.title)
 
-  const articlelink = createElement('a', {href: article.url, target: '_blank'})
-  articlelink.append('Go to article >>')
+    const published = createElement('time')
+    published.append(article.publishedAt.substring(0, 10))
 
-  const newsitemtext = createElement('div', {'class': 'newsitemtext'})
-  newsitemtext.append(title)
-  newsitemtext.append(articlelink)
+    const articlelink = createElement('a', {href: article.url, target: '_blank'})
+    articlelink.append('Go to article >>')
 
-  const newsitem = createElement('div', {'class': 'newsitem twelve'})
-  newsitem.append(newsitemtext)
+    const newsitemtext = createElement('div', {'class': 'newsitemtext'})
+    newsitemtext.append(title)
+    newsitemtext.append(published)
+    newsitemtext.append(articlelink)
 
-  return newsitem
+    const newsitem = createElement('div', {'class': 'newsitem twelve'})
+    newsitem.append(newsitemtext)
+
+    return newsitem
 }
 
-// Creating article with image HTML structure
+// Creating HTML article with image
 function createImageArticle (article) {
-  const DOMarticle = createArticle(article)
+    const DOMarticle = createArticle(article)
 
-  const newsimage = createElement('div', {'class': 'newsimage'})
-  DOMarticle.prepend(newsimage)
+    // image
+    const newsimage = createElement('div', {'class': 'newsimage'})
+    DOMarticle.prepend(newsimage)
+    DOMarticle.classList.add('hasimage')
 
-  DOMarticle.classList.add('has_image')
+    // find stuff to add stuff
+    const newsitemtext = DOMarticle.querySelector('.newsitemtext')
 
-  const newsitemtext = DOMarticle.querySelector('.newsitemtext')
+    // description
+    if (article.description != null) {
+        const text = createElement('p')
+        text.append(article.description.substring(0, 100).trim() + '...')
+        newsitemtext.append(text)
+    }
 
-  // text wrapper
-  const textwrapper = createElement('div', {'class': 'textwrapper'})
-  newsitemtext.append(textwrapper)
+    // backup image if empty string
+    if (article.urlToImage === "") {
+        newsimage.style.backgroundImage = "url('images/backup_newsimage.jpg')" // backup for faulty images
+    } else {
+        newsimage.style.backgroundImage = "url('" + article.urlToImage + "')"
+    }
 
-  // description
-  if (article.description != null) {
-    const text = createElement('p')
-    text.append(article.description.substring(0, 70))
-    textwrapper.append(text)
-  }
-
-  // date + author
-  const published = createElement('time')
-  published.append(article.publishedAt.substring(0, 10))
-  textwrapper.append(published)
-
-  if (article.author != null) {
-    const author = createElement('span')
-    author.append('Source: ' + article.author)
-    textwrapper.append(author)
-  }
-
-  if (!article.urlToImage) {
-    newsimage.style.backgroundImage = "url('images/backup_newsimage.jpg')" // backup for faulty images
-  } else {
-    newsimage.style.backgroundImage = "url('" + article.urlToImage + "')"
-  }
-
-  return DOMarticle
+    return DOMarticle
 }
 
-// Getting news
+// Getting news via API
 fetch('https://newsapi.org/v2/top-headlines?sources=hacker-news&apiKey=d5fd3705dc214827afd29a85565e7693')
 
 // Check for errors
-  .then(HNresult => {
+    .then(HNresult => {
     if (!HNresult.ok) {
-      throw HNresult
+        throw HNresult
     }
     return HNresult.json()
-  })
+})
 
-  .then(HNresult => {
+// Setting article arrays 
+    .then(HNresult => {
     let imageArticles = []
     let otherArticles = []
     for (var i = 0; i < HNresult.articles.length; i++) {
-      const article = HNresult.articles[i]
-      if (article.urlToImage != null && imageArticles.length < neededImageArticles) {
-        imageArticles.push(article)
-      } else {
-        otherArticles.push(article)
-      }
+        const article = HNresult.articles[i]
+        if (article.urlToImage != null && imageArticles.length < neededImageArticles) {
+            imageArticles.push(article)
+        } else {
+            otherArticles.push(article)
+        }
     }
 
     if (imageArticles.length < neededImageArticles) {
-      const needed = neededImageArticles - imageArticles.length
-      otherArticles.slice(0, needed).forEach(function (article) {
-        imageArticles.push(article)
-      })
-      otherArticles = otherArticles.slice(needed, otherArticles.length)
+        const needed = neededImageArticles - imageArticles.length
+        otherArticles.slice(0, needed).forEach(function (article) {
+            imageArticles.push(article)
+        })
+        otherArticles = otherArticles.slice(needed, otherArticles.length)
     }
 
-    // Loop image articles
+    // Loop articles WITH images
     for (let i = 0; i < imageArticles.length; i++) {
-      const article = imageArticles[i]
-      const DOMarticle = createImageArticle(article)
-      DOMarticle.classList.add(`mainitem-${i + 1}`)
-      if (i < 3) {
-        mainnews.append(DOMarticle)
-      } else {
-        verticalnews.append(DOMarticle)
-      }
+        const article = imageArticles[i]
+        const DOMarticle = createImageArticle(article)
+        DOMarticle.classList.add(`mainitem-${i + 1}`)
+        if (i < 3) {
+            mainnews.append(DOMarticle)
+        } else {
+            verticalnews.append(DOMarticle)
+        }
     }
 
-    // Non-image articles
+    // Loop articles WITHOUT images
     for (let i = 0; i < otherArticles.length; i++) {
-      const article = otherArticles[i]
-      const DOMarticle = createArticle(article)
-      othernews.append(DOMarticle)
+        const article = otherArticles[i]
+        const DOMarticle = createArticle(article)
+        othernews.append(DOMarticle)
     }
-  })
+})
 
-// error message
-  .catch(err => {
+// Error message
+    .catch(err => {
     err.text().then(errorMessage => {
-      const errormessage = document.createElement('div')
-      errormessage.setAttribute('class', 'error twelve')
-      errormessage.textContent = 'Whoops! Something went wrong fetching the news, please look back later!'
-      newscontainer.append(errormessage)
+        const errormessage = createElement('div', {'class': 'error'})
+        errormessage.append('Whoops! Something went wrong fetching Hacker News, please look back later!')
+        newscontainer.prepend(errormessage)
     })
-  })
+})

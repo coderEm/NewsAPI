@@ -4,53 +4,10 @@ Based on SahAssars flex grid http://sahassar.github.io/css-framework/
 Re-built with mediaqueries for variying screens
 Re-built with SCSS http://sass-lang.com/
 -----------------------------------------------------------------*/
- 
+
 @import 'helpers';
 
 
-/* M - grid widths */
-@mixin flex-basis-margin($gridclass) {
-    flex-basis: calc(#{$gridclass} - (#{$margin-hor} * 2));
-}
-
-@mixin flex-basis-padding($gridclass) {
-    flex-basis: calc(#{$gridclass} - (#{$padding-hor} * 2));
-}
-
-@mixin flex-basis-margin-padding($gridclass) {
-    flex-basis: calc(#{$gridclass} - (#{$margin-hor} * 2) - (#{$padding-hor} * 2));
-}
-
-/* M - media queries */
-@mixin breakpoint($point) {
-    @if $point == l {
-        @media (max-width: 1440px) {
-            @content;
-        }
-    }
-    @else if $point == m {
-        @media (max-width: 1024px) {
-            @content;
-        }
-    }
-    @else if $point == s {
-        @media (max-width: 780px) {
-            @content;
-        }
-    }
-    @else if $point == xs {
-        @media (max-width: 640px) {
-            @content;
-        }
-    }
-    /*ie 10+ fixes*/
-    @else if $point == ie-fix {
-        @media screen and (-ms-high-contrast: active), screen and (-ms-high-contrast: none) {
-            @content;
-        }
-    }
-}
- 
 /*----------------------------------------------------------------
 General flex styles
 -----------------------------------------------------------------*/

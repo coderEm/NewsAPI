@@ -2,41 +2,60 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Hacker News - API</title>
+        <title>Hacker News | News API</title>
+        <meta name="description" content="Using News API and Fetech API to present Hacker News as a webpage">
         <meta charset="utf-8"/>
         <link href='styles/styles.css' rel='stylesheet'/>
-        <link href="https://fonts.googleapis.com/css?family=Bitter:400,700|Lato:300,500|Work+Sans:400,600" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Bitter:400|Lato:400,700" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <header>
-
-        </header>
         <main>
-            <div id="newscontainer" class="wrapper container lrg flex">
-                <div class="nine flex margin main-news" id="main-news">
-                    <div class="no-grow logo-wrapper align center">
-                        <img class="logo" src="images/hacker-news-logo.png" />
+            <div class="newscontainer container lrg flex">
+                <div class="main-news nine flex margin">
+                    <div class="logo-wrapper no-grow align center xs-left">
+                        <img class="logo xs-hide" src="images/hacker-news-logo.png" />
+                        <img class="logo hide xs-show" src="images/hacker-news-logo-mobile.png" />
                     </div>
-                    <!---here comes image news-->
+                    <!---3 newsitems-->
                 </div>
-                <div class="three m-twelve flex margin vertical-news" id="vertical-news">
-                    <!---here comes 1 news-->
+                <div class="vertical-news three m-twelve flex margin">
+                    <!---1 newsitem-->
                 </div>
                 <div class="flex margin">
-                    <div class="nine">
-                        <div class="flex margin other-news" id="other-news">
-                            <!---here comes news without images-->
+                    <div class="other-news nine m-eight s-twelve">
+                        <div class="flex margin">
+                            <h2>Headlines from Hacker News</h2>
+                            <!---rest of news-->
                         </div>
                     </div>
-                    <div class="three flex margin hackernews">
+                    <div class="hackernews three m-four s-twelve flex margin">
                         <div>
-                            <a class="twelve" href="#">
-                                Read all news at HN main page <br />
-                                Social media <br />
-                                Social media <br />
-                                Social media <br />
-                            </a>
+                            <h2>About</h2>
+                            <p>
+                                Hacker News is a social news website focusing on computer science and entrepreneurship. It is run by Paul Graham's investment fund and startup incubator, Y Combinator. In general, content that can be submitted is defined as "anything that gratifies one's intellectual curiosity".
+                            </p>
+
+                            <h2>HN links...</h2>
+                            <p>
+                                <a href="https://news.ycombinator.com/news" target="_blank">
+                                    <span><i class="fas fa-list-ul"></i></span>
+                                    <span>HN main news page</span>
+                                </a>
+                                <a href="https://www.facebook.com/hnbot/" target="_blank">
+                                    <span><i class="fab fa-facebook-f"></i></span>
+                                    <span>HN on Facebook</span>
+                                </a>
+                                <a href="https://twitter.com/newsycombinator?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor" target="_blank">
+                                    <span><i class="fab fa-twitter"></i></span>
+                                    <span>HN on Twitter</span>
+                                </a>
+                                <a href="https://news.ycombinator.com/jobs" target="_blank">
+                                    <span><i class="fas fa-briefcase"></i></span>
+                                    <span>HN Job list</span>
+                                </a>
+                            </p>
                         </div>
 
                     </div>

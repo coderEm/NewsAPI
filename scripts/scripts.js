@@ -57,7 +57,7 @@ function createImageArticle (article) {
 
     // backup image if empty string
     if (article.urlToImage === "") {
-        newsimage.style.backgroundImage = "url('images/backup_newsimage.jpg')" // backup for faulty images
+        newsimage.style.backgroundImage = "url('images/backup-newsimage.jpg')" // backup for faulty images
     } else {
         newsimage.style.backgroundImage = "url('" + article.urlToImage + "')"
     }
